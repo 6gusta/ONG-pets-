@@ -1,6 +1,7 @@
 package com.Crud._gusta.controller;
 
 
+import com.Crud._gusta.exceptionsGenerics.CustomException;
 import com.Crud._gusta.model.CadastroOng;
 import com.Crud._gusta.model.InteressadosPet;
 import com.Crud._gusta.model.LoginDTO;
@@ -34,17 +35,14 @@ public class CadastroController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
-        try {
-            String user = loginService.auntenticao(loginDTO);
+        String user = loginService.auntenticao(loginDTO);
 
-            if (user != null) {
-                return ResponseEntity.ok("Login bem-sucedido");
-            }
-
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro no servidor: " + e.getMessage());
+        if (user != null) {
+            return ResponseEntity.ok("Login bem-sucedido");
         }
+
+
+        throw new CustomException("Credenciais inválidas", "LOGIN_INVALID");
     }
 
     @PostMapping("/register")
@@ -95,20 +93,12 @@ public class CadastroController {
 
     @GetMapping("/pets/{idpet}")
     public ResponseEntity<?> buscapet(@PathVariable("idpet") Long idpet) {
-
-
-
         Optional<Model> pet = getPetsService.buscarpet(idpet);
 
-        if (pet.isPresent()) {
-            return ResponseEntity.ok(pet.get());
-        }else {
-            return ResponseEntity.status(404).body("Erro ao buscar pet");
-        }
-
-
-
+        return pet.map(ResponseEntity::ok)
+                .orElseThrow(() -> new CustomException("Pet não encontrado", "PET_NOT_FOUND"));
     }
+
 
     @GetMapping("/ong/{idCadastrado}")
 
