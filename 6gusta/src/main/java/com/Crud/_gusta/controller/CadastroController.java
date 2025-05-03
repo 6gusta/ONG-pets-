@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api")
 public class CadastroController {
 
@@ -48,6 +49,7 @@ public class CadastroController {
     @PostMapping("/register")
     public ResponseEntity<String> registerPet(@RequestBody Model pet) {
         try {
+            System.out.println(" recebendo dados do pet"+ pet.toString());
             Model petSalvo = cadastroPetService.cadastropet(
                     pet.getNome(),
                     pet.getIdade(),
@@ -58,6 +60,8 @@ public class CadastroController {
                     pet.getDescricao(),
                     pet.getFotoperfil()
             );
+
+
 
             if (petSalvo != null) {
                 return ResponseEntity.ok("Pet cadastrado com sucesso");

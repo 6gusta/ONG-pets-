@@ -18,10 +18,11 @@ public class Model {
     private String nome;
     private String idade;
     private String sexo;
-    private String Porte;
+    private String porte;
     private String cidade;
-    private String Caracteristicas;
+    private String caracteristicas;
     private String descricao;
+    @Lob
      private String fotoperfil ;
 
 
