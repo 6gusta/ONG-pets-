@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -102,6 +103,13 @@ public class CadastroController {
         return pet.map(ResponseEntity::ok)
                 .orElseThrow(() -> new CustomException("Pet não encontrado", "PET_NOT_FOUND"));
     }
+
+    @GetMapping("/pet")
+    public ResponseEntity<List<Model>> listarPets() {
+        List<Model> pets = getPetsService.listarTodos();
+        return ResponseEntity.ok(pets);
+    }
+
 
 
     @GetMapping("/ong/{idCadastrado}")
