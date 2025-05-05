@@ -110,6 +110,15 @@ public class CadastroController {
         return ResponseEntity.ok(pets);
     }
 
+    @GetMapping("/ongs")
+    public ResponseEntity<List<InteressadosPet>> interessadosPets() {
+        List<InteressadosPet> ongs = getOngService.buscaONGs();
+
+        return ResponseEntity.ok(ongs);
+
+
+    }
+
 
 
     @GetMapping("/ong/{idCadastrado}")

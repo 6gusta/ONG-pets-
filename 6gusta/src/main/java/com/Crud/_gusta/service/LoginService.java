@@ -32,7 +32,7 @@ public class LoginService {
          CadastroOng auth = ongCadastroRepository.findByNome(logindto.getNome());
          if (auth != null && passwordEncoder.matches(logindto.getSenha(), auth.getSenha())) {
 
-
+             LOGGER.info(" login bem sucedido " + auth);
              return jwtUtil.GerarToken(auth.getNome(), auth.getRole());
 
 
