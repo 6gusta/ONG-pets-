@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200",  allowCredentials = "true")
 @RequestMapping("/api")
 public class CadastroController {
 
@@ -35,7 +35,7 @@ public class CadastroController {
         this.postOngService = postOngService;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/admin/login")
     public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
         String user = loginService.auntenticao(loginDTO);
 
@@ -75,7 +75,7 @@ public class CadastroController {
         }
     }
 
-    @PostMapping("/registerong")
+    @PostMapping("admin/registerong")
     public ResponseEntity<String> registerOng(@RequestBody CadastroOng cadastroOng) {
         try {
             CadastroOng ongSalva = ongSendService.SendService(
