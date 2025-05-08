@@ -20,8 +20,10 @@ public class Model {
     private String sexo;
     private String porte;
     private String cidade;
+    private String estado;
     private String caracteristicas;
     private String descricao;
+
     @Lob
      private String fotoperfil ;
 

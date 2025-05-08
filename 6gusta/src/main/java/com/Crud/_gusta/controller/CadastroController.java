@@ -25,14 +25,56 @@ public class CadastroController {
     private final LoginService loginService;
     private final GetOng getOngService;
     private final PostOng postOngService;
+    private final UpdatePets updatePetsService;
+    private  final DeletePet deletePetService;
+    private final FiltroPetsService filtroPetsService;
 
-    public CadastroController(CadastroPetService cadastroPetService, OngSendService ongSendService, GetPetsService getPetsService, LoginService loginService, GetOng getOngService, PostOng postOngService) {
+    public CadastroController(CadastroPetService cadastroPetService, OngSendService ongSendService, GetPetsService getPetsService, LoginService loginService, GetOng getOngService, PostOng postOngService, UpdatePets updatePetsService, DeletePet deletePetService, FiltroPetsService filtroPetsService) {
         this.cadastroPetService = cadastroPetService;
         this.ongSendService = ongSendService;
         this.getPetsService = getPetsService;
         this.loginService = loginService;
         this.getOngService = getOngService;
         this.postOngService = postOngService;
+        this.updatePetsService = updatePetsService;
+        this.deletePetService = deletePetService;
+        this.filtroPetsService = filtroPetsService;
+    }
+
+    @PutMapping("/user/{idpet}")
+    public ResponseEntity<?> atualizarpet(@PathVariable("idpet") Long idpet, @RequestBody Model pet){
+        Model model = updatePetsService.uppets(idpet, pet);
+
+        if(model != null){
+            return new ResponseEntity(model, HttpStatus.OK);
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @DeleteMapping("/excluirpets/{idpet}")
+    public ResponseEntity<?> excluirpets(@PathVariable("idpet") Long idpet){
+
+        boolean sucesso = deletePetService.DelPet(idpet);
+
+        if(sucesso){
+            return ResponseEntity.ok(" pet excluido com sucesso");
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(" PET NÃO ENCONTRADO");
+        }
+    }
+
+    @GetMapping("/filtra")
+
+    public ResponseEntity<List<Model>> foltrapets(
+
+            @RequestParam(required = false) String porte,
+            @RequestParam(required = false) String cidade,
+            @RequestParam(required = false) String estado,
+            @RequestParam(required = false) String idade
+    ){
+        List<Model> resultado = filtroPetsService.filtrar(porte, cidade, estado, idade);
+        return ResponseEntity.ok(resultado);
     }
 
     @PostMapping("/admin/login")
