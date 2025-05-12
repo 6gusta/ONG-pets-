@@ -68,6 +68,8 @@ public class CadastroController {
 
     public ResponseEntity<List<Model>> foltrapets(
 
+
+
             @RequestParam(required = false) String porte,
             @RequestParam(required = false) String cidade,
             @RequestParam(required = false) String estado,

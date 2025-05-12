@@ -18,19 +18,15 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // 👈 CORS configurado aqui
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // CORS configurado aqui
                 .csrf(csrf -> csrf.disable()) // Desativa CSRF para simplificar
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**", "/login", "/h2-console/**").permitAll() // Libera estas rotas
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers("/user/**").hasAuthority("USER")  // Restrição para ADMIN
-                        .anyRequest().authenticated() // Exige autenticação para o restante
+                        .anyRequest().permitAll() // Permite todas as rotas sem autenticação
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Garante JWT sem sessões
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) // Adiciona o filtro JWT
@@ -38,6 +34,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

@@ -15,6 +15,7 @@ public class FiltroPetsService {
     private CadastroRepository cadastro;
 
     public List<Model> filtrar(String porte, String cidade, String estado, String idade) {
+        System.out.println(">>> filtros: idade='" + idade + "', porte='" + porte + "', cidade='" + cidade + "', estado='" + estado + "'");
         return cadastro.findAll(ModelSpecification.filter(porte, cidade, estado, idade));
     }
 }
