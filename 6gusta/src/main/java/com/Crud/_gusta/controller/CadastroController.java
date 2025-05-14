@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -52,17 +53,21 @@ public class CadastroController {
         }
     }
 
+
     @DeleteMapping("/excluirpets/{idpet}")
-    public ResponseEntity<?> excluirpets(@PathVariable("idpet") Long idpet){
+    public ResponseEntity<?> excluirpets(@PathVariable("idpet") Long idpet) {
 
         boolean sucesso = deletePetService.DelPet(idpet);
 
-        if(sucesso){
-            return ResponseEntity.ok(" pet excluido com sucesso");
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(" PET NÃO ENCONTRADO");
+        if (sucesso) {
+            // Resposta em JSON: { "mensagem": "pet excluído com sucesso" }
+            return ResponseEntity.ok(Map.of("mensagem", "pet excluído com sucesso"));
+        } else {
+            // Resposta em JSON: { "erro": "PET NÃO ENCONTRADO" }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("erro", "PET NÃO ENCONTRADO"));
         }
     }
+
 
     @GetMapping("/filtra")
 
