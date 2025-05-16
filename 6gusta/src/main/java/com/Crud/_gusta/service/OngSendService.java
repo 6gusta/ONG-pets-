@@ -18,7 +18,7 @@ public class OngSendService {
         this.ongCadastroRepository = ongCadastroRepository;
     }
 
-    public CadastroOng SendService(String nome, String email, String senha, String role) {
+    public CadastroOng SendService(String nome, String email, String senha) {
         try {
 
 
@@ -26,7 +26,7 @@ public class OngSendService {
             cadastro.setNome(nome);
             cadastro.setEmail(email);
             cadastro.setSenha(BCrypt.hashpw(senha, BCrypt.gensalt()));
-            cadastro.setRole(role);
+
 
             return ongCadastroRepository.save(cadastro);
 

@@ -14,37 +14,38 @@ import java.util.logging.Logger;
 public class LoginService {
 
     private final OngCadastroRepository ongCadastroRepository;
-
     private static final Logger LOGGER = Logger.getLogger(LoginService.class.getName());
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     public LoginService(OngCadastroRepository ongCadastroRepository) {
         this.ongCadastroRepository = ongCadastroRepository;
     }
-     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    JwtUtil jwtUtil;
-    public String  auntenticao(LoginDTO logindto){
 
-     try {
+    public String autenticar(LoginDTO loginDTO) {
+        CadastroOng cadastro = ongCadastroRepository.findByNome(loginDTO.getNome());
 
-
-         CadastroOng auth = ongCadastroRepository.findByNome(logindto.getNome());
-         if (auth != null && passwordEncoder.matches(logindto.getSenha(), auth.getSenha())) {
-
-             LOGGER.info(" login bem sucedido " + auth);
-             return jwtUtil.GerarToken(auth.getNome(), auth.getRole());
-
-
-         }
-     }catch (Exception e){
-
-
-
-         LOGGER.severe( " erro no metodo de cadastra um pet" + e.getMessage());
-
+        if (cadastro == null) {
+            throw new IllegalArgumentException("Usuário não encontrado.");
         }
-        return null;
 
+        if (!passwordEncoder.matches(loginDTO.getSenha(), cadastro.getSenha())) {
+            throw new IllegalArgumentException("Senha incorreta.");
+        }
+
+        String role = cadastro.getRole();
+        if (role == null || role.isBlank()) {
+            throw new IllegalStateException("Usuário não possui perfil definido.");
+        }
+
+        String token = jwtUtil.gerarToken(cadastro.getNome(), role);
+        LOGGER.info("Login bem-sucedido para: " + cadastro.getNome());
+        System.out.println("Token gerado: " + token);
+
+        return token;
     }
 }

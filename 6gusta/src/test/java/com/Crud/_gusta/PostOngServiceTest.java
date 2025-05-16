@@ -45,8 +45,8 @@ public class PostOngServiceTest {
         CadastroOng resultado = ongSendService.SendService(
                 ong.getNome(),
                 ong.getEmail(),
-                ong.getSenha(),
-                ong.getRole()
+                ong.getSenha()
+
         );
 
         assertNotNull(resultado);

@@ -6,14 +6,16 @@ import com.Crud._gusta.model.CadastroOng;
 import com.Crud._gusta.model.InteressadosPet;
 import com.Crud._gusta.model.LoginDTO;
 import com.Crud._gusta.model.Model;
+import com.Crud._gusta.repository.OngCadastroRepository;
 import com.Crud._gusta.service.*;
+import com.Crud._gusta.util.JwtUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200",  allowCredentials = "true")
@@ -29,8 +31,11 @@ public class CadastroController {
     private final UpdatePets updatePetsService;
     private  final DeletePet deletePetService;
     private final FiltroPetsService filtroPetsService;
+    private final OngCadastroRepository ongCadastroRepository;
+    private  final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder;
 
-    public CadastroController(CadastroPetService cadastroPetService, OngSendService ongSendService, GetPetsService getPetsService, LoginService loginService, GetOng getOngService, PostOng postOngService, UpdatePets updatePetsService, DeletePet deletePetService, FiltroPetsService filtroPetsService) {
+    public CadastroController(CadastroPetService cadastroPetService, OngSendService ongSendService, GetPetsService getPetsService, LoginService loginService, GetOng getOngService, PostOng postOngService, UpdatePets updatePetsService, DeletePet deletePetService, FiltroPetsService filtroPetsService, OngCadastroRepository ongCadastroRepository, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
         this.cadastroPetService = cadastroPetService;
         this.ongSendService = ongSendService;
         this.getPetsService = getPetsService;
@@ -40,6 +45,9 @@ public class CadastroController {
         this.updatePetsService = updatePetsService;
         this.deletePetService = deletePetService;
         this.filtroPetsService = filtroPetsService;
+        this.ongCadastroRepository = ongCadastroRepository;
+        this.jwtUtil = jwtUtil;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PutMapping("/user/{idpet}")
@@ -84,17 +92,20 @@ public class CadastroController {
         return ResponseEntity.ok(resultado);
     }
 
-    @PostMapping("/admin/login")
-    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
-        String user = loginService.auntenticao(loginDTO);
-
-        if (user != null) {
-            return ResponseEntity.ok("Login bem-sucedido");
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
+        try {
+            String token = loginService.autenticar(loginDTO);
+            return ResponseEntity.ok(Map.of("token", token));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno.");
         }
-
-
-        throw new CustomException("Credenciais inválidas", "LOGIN_INVALID");
     }
+
 
     @PostMapping("/register")
     public ResponseEntity<String> registerPet(@RequestBody Model pet) {
@@ -108,7 +119,8 @@ public class CadastroController {
                     pet.getCidade(),
                     pet.getCaracteristicas(),
                     pet.getDescricao(),
-                    pet.getFotoperfil()
+                    pet.getFotoperfil(),
+                    pet.getEstado()
             );
 
 
@@ -124,14 +136,15 @@ public class CadastroController {
         }
     }
 
-    @PostMapping("admin/registerong")
+    @PostMapping("/admin/registerong")
     public ResponseEntity<String> registerOng(@RequestBody CadastroOng cadastroOng) {
         try {
+           // aqui você cria uma ONG, não um admin
+
             CadastroOng ongSalva = ongSendService.SendService(
                     cadastroOng.getNome(),
                     cadastroOng.getEmail(),
-                    cadastroOng.getSenha(),
-                    cadastroOng.getRole()
+                    cadastroOng.getSenha()
             );
 
             if (ongSalva != null) {
@@ -139,11 +152,11 @@ public class CadastroController {
             } else {
                 return ResponseEntity.status(400).body("Erro ao registrar a ONG");
             }
-
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erro no servidor: " + e.getMessage());
         }
     }
+
 
     @GetMapping("/pets/{idpet}")
     public ResponseEntity<?> buscapet(@PathVariable("idpet") Long idpet) {

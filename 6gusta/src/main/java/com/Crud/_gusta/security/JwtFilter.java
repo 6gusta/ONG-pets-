@@ -1,6 +1,5 @@
 package com.Crud._gusta.security;
 
-
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,9 +17,8 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-
 @Component
-public class JwtFilter  extends OncePerRequestFilter {
+public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
@@ -29,8 +27,11 @@ public class JwtFilter  extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain chain)
             throws ServletException, IOException {
+
         String header = request.getHeader("Authorization");
 
         if (header != null && header.startsWith("Bearer ")) {
@@ -43,7 +44,7 @@ public class JwtFilter  extends OncePerRequestFilter {
                     throw new Exception("Token inválido ou expirado");
                 }
 
-                String nome = claims.get("nome", String.class);  // Alterado para "nome"
+                String nome = claims.get("nome", String.class);
                 String role = claims.get("role", String.class);
 
                 if (nome == null || role == null) {
@@ -51,11 +52,13 @@ public class JwtFilter  extends OncePerRequestFilter {
                 }
 
                 List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
+
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(nome, null, authorities);
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 System.out.println("Usuário autenticado: " + nome + " - Role: " + role);
+
             } catch (Exception e) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 response.getWriter().write("Erro ao processar o token: " + e.getMessage());

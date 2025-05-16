@@ -51,7 +51,8 @@ public class CadastroPetTest {
                 model.getCidade(),
                 model.getCaracteristicas(),
                 model.getDescricao(),
-                model.getFotoperfil()
+                model.getFotoperfil(),
+                model.getEstado()
 
         );
 

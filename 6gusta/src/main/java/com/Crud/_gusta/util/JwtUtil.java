@@ -10,39 +10,38 @@ import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
 
-
 @Component
 public class JwtUtil {
 
     private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private static final long EXPIRATION_TIME = 86400000;
+    private static final long EXPIRATION_TIME = 86400000; // 24h
     private final Key key = SECRET_KEY;
 
-    public String GerarToken(String nome, String role) {
+    public String gerarToken(String nome, String role) {
         try {
             return Jwts.builder()
-                    .setSubject(nome) // Define o nome do usuário no token
-                    .claim("role", role)
-                    .claim("nome", nome) // Adiciona a role do usuário como claim
-                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) // Expira em 24h
-                    .signWith(key, SignatureAlgorithm.HS256) // Assina o token com chave secreta e HS256
-                    .compact(); // Retorna o token como String
+                    .setSubject(nome) // nome do usuário
+                    .claim("role", role) // role já com prefixo ROLE_
+                    .claim("nome", nome)
+                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+                    .signWith(key, SignatureAlgorithm.HS256)
+                    .compact();
         } catch (Exception e) {
-            e.printStackTrace(); // Log de erro em caso de falha na geração do token
-            return null; // Retorna null em caso de falha
+            e.printStackTrace();
+            return null;
         }
     }
 
     public Claims extractClaims(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(key) // Define a chave para validar o token
+                    .setSigningKey(key)
                     .build()
-                    .parseClaimsJws(token) // Analisa e valida o token assinado
-                    .getBody(); // Retorna os dados contidos no token
+                    .parseClaimsJws(token)
+                    .getBody();
         } catch (Exception e) {
-            e.printStackTrace(); // Log de erro em caso de falha na análise do token
-            return null; // Retorna null se não conseguir extrair as claims
+            e.printStackTrace();
+            return null;
         }
     }
 }

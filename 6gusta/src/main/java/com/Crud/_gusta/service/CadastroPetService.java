@@ -27,7 +27,7 @@ public class CadastroPetService {
 
     private PasswordEncoder passwordEncoder;
 
-    public Model cadastropet(String nome , String idade, String sexo, String porte, String cidade, String Caracteristicas, String descricao, String fotoperfil) {
+    public Model cadastropet(String nome , String idade, String sexo, String porte, String cidade, String Caracteristicas, String descricao, String fotoperfil , String estado) {
 
         try {
 
@@ -41,6 +41,7 @@ public class CadastroPetService {
             cadastro.setCaracteristicas(Caracteristicas);
             cadastro.setDescricao(descricao);
             cadastro.setFotoperfil(fotoperfil);
+            cadastro.setEstado(estado);
 
 
 
