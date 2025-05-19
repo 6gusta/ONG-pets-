@@ -9,13 +9,15 @@
 ## Visão Geral
 
 Este projeto consiste na API RESTful para o sistema de adoção de pets, construída com Java e Spring Boot. Ele é responsável
-por gerenciar toda a lógica de negócio, autenticação, autorização, persistência de dados e regras da aplicação, permitindo a integração com frontends e outros serviços.
+por gerenciar toda a lógica de negócio, autenticação, autorização, persistência de dados e regras da aplicação, permitindo a
+ integração com frontends e outros serviços.
 
 ---
 
 ## Motivação
 
-Criar uma API robusta, segura e escalável para apoiar o frontend do sistema de adoção, garantindo que as operações relacionadas a usuários, pets e autenticação sejam feitas de forma eficiente e confiável.
+Criar uma API robusta, segura e escalável para apoiar o frontend do sistema de adoção, garantindo que as operações relacionadas
+ a usuários, pets e autenticação sejam feitas de forma eficiente e confiável.
 
 ---
 
