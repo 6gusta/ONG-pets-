@@ -1,100 +1,52 @@
-Sistema de Adoção de Pets - Frontend Angular
-Este projeto é o frontend de um sistema completo de adoção de pets, desenvolvido em Angular, com foco na experiência do usuário para visualização, cadastro e gerenciamento de animais disponíveis para adoção. A aplicação é uma SPA (Single Page Application) que consome uma API RESTful para operações CRUD e autenticação.
+# Sistema de Adoção de Pets - Frontend Angular
 
-Visão Geral
-Este projeto foi gerado usando o Angular CLI versão 19.2.8.
+Projeto frontend desenvolvido em Angular (versão 19.2.8), que implementa uma SPA para adoção de pets. A aplicação consome uma API RESTful para operações de cadastro, edição, visualização e autenticação.
 
-Motivação
-A ideia surgiu para criar uma plataforma eficiente e intuitiva para facilitar a adoção responsável de pets, proporcionando uma interface moderna e responsiva que possa ser usada tanto por interessados quanto por administradores da ONG.
+---
 
-Funcionalidades Principais
-Autenticação de usuários com rotas protegidas.
+## Funcionalidades
 
-Cadastro, edição e visualização detalhada dos pets.
+- Autenticação de usuários com rotas protegidas.
+- Cadastro, edição e visualização detalhada dos pets.
+- Filtros por localização, espécie, porte e idade.
+- Formulários reativos com validação robusta.
+- Navegação responsiva para desktop e dispositivos móveis.
+- Feedback visual para melhor interação.
 
-Filtros avançados por localização, espécie, porte, idade, entre outros.
+---
 
-Formulários reativos e validação robusta para garantir qualidade dos dados.
+## Tecnologias
 
-Navegação intuitiva e responsiva para diferentes dispositivos.
+- Angular 15+
+- TypeScript
+- RxJS
+- Angular Router
+- Angular Reactive Forms
+- HTML5 e CSS3 responsivo
 
-Feedback visual e mensagens claras para interação com o usuário.
+---
 
-Estrutura do Projeto
-src/app/components - Componentes reutilizáveis (cards, botões, formulários).
+## Estrutura do Projeto
 
-src/app/pages - Páginas principais da aplicação (home, login, dashboard).
+- `src/app/components` — Componentes reutilizáveis.
+- `src/app/pages` — Páginas principais.
+- `src/app/services` — Serviços para API.
+- `src/app/models` — Modelos TypeScript.
+- `src/assets` — Recursos estáticos.
 
-src/app/services - Serviços Angular para consumo da API e manipulação dos dados.
+---
 
-src/app/models - Interfaces e modelos de dados para tipagem TypeScript.
+## Como rodar
 
-src/assets - Imagens, estilos globais e recursos estáticos.
+### Pré-requisitos
 
-Tecnologias Utilizadas
-Angular 15+
+- Node.js (v14+)
+- Angular CLI (`npm install -g @angular/cli`)
 
-TypeScript
+### Passos
 
-RxJS para programação reativa
-
-Angular Router para gerenciamento de rotas
-
-Angular Reactive Forms para formulários
-
-HTML5 & CSS3 com design responsivo
-
-Como Rodar o Projeto
-Pré-requisitos
-Node.js (v14+)
-
-Angular CLI instalado (npm install -g @angular/cli)
-
-Passos para execução
-bash
-Copy
-Edit
+```bash
 git clone https://github.com/6gusta/Angulardo.git
 cd Angulardo
 npm install
 ng serve --open
-Após executar o servidor local, abra o navegador em http://localhost:4200/. A aplicação irá recarregar automaticamente sempre que você modificar algum arquivo fonte.
-
-Desenvolvimento e Utilitários
-Gerar componentes
-Para gerar um novo componente, utilize:
-
-bash
-Copy
-Edit
-ng generate component nome-do-componente
-Para listar todos os esquemas disponíveis (componentes, diretivas, pipes):
-
-bash
-Copy
-Edit
-ng generate --help
-Build da aplicação
-Para compilar a aplicação e gerar os arquivos finais, rode:
-
-bash
-Copy
-Edit
-ng build
-Os arquivos compilados serão salvos na pasta dist/. Por padrão, o build de produção otimiza o código para desempenho e velocidade.
-
-Testes
-Testes unitários
-Para executar testes unitários usando o Karma:
-
-bash
-Copy
-Edit
-ng test
-Testes end-to-end (e2e)
-Para testes end-to-end:
-
-bash
-Copy
-Edit
-ng e2e
