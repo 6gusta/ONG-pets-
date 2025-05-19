@@ -1,52 +1,70 @@
-# Sistema de Adoção de Pets - Frontend Angular
-
-Projeto frontend desenvolvido em Angular (versão 19.2.8), que implementa uma SPA para adoção de pets. A aplicação consome uma API RESTful para operações de cadastro, edição, visualização e autenticação.
 
 ---
 
-## Funcionalidades
+# README Detalhado para **ONG-pets- (Backend Spring Boot)**
 
-- Autenticação de usuários com rotas protegidas.
-- Cadastro, edição e visualização detalhada dos pets.
-- Filtros por localização, espécie, porte e idade.
-- Formulários reativos com validação robusta.
-- Navegação responsiva para desktop e dispositivos móveis.
-- Feedback visual para melhor interação.
+```markdown
+# Sistema de Adoção de Pets - Backend Spring Boot
 
----
+## Visão Geral
 
-## Tecnologias
-
-- Angular 15+
-- TypeScript
-- RxJS
-- Angular Router
-- Angular Reactive Forms
-- HTML5 e CSS3 responsivo
+Este projeto consiste na API RESTful para o sistema de adoção de pets, construída com Java e Spring Boot. Ele é responsável por gerenciar toda a lógica de negócio, autenticação, autorização, persistência de dados e regras da aplicação, permitindo a integração com frontends e outros serviços.
 
 ---
 
-## Estrutura do Projeto
+## Motivação
 
-- `src/app/components` — Componentes reutilizáveis.
-- `src/app/pages` — Páginas principais.
-- `src/app/services` — Serviços para API.
-- `src/app/models` — Modelos TypeScript.
-- `src/assets` — Recursos estáticos.
+Criar uma API robusta, segura e escalável para apoiar o frontend do sistema de adoção, garantindo que as operações relacionadas a usuários, pets e autenticação sejam feitas de forma eficiente e confiável.
 
 ---
 
-## Como rodar
+## Funcionalidades Principais
+
+- Autenticação e autorização com Spring Security e JWT.
+- CRUD completo para cadastro, atualização, exclusão e listagem de pets.
+- Gestão de usuários com roles (perfis) para controle de acesso.
+- Integração com banco de dados relacional MySQL via Spring Data JPA.
+- Estrutura em camadas com controllers, serviços e repositórios.
+- Suporte a logs e tratamento centralizado de exceções.
+- Dockerização para facilitar deploy e ambiente de desenvolvimento.
+
+---
+
+## Arquitetura do Projeto
+
+- **Controller**: Endpoints REST para manipulação das requisições.
+- **Service**: Regras de negócio e validações.
+- **Repository**: Interface de acesso a dados.
+- **Model/Entity**: Representação das tabelas do banco.
+- **Security**: Configuração de segurança, filtros JWT e handlers.
+- **DTOs**: Objetos de transferência de dados para desacoplamento.
+
+---
+
+## Tecnologias Utilizadas
+
+- Java 17+
+- Spring Boot 3+
+- Spring Security (JWT)
+- Spring Data JPA
+- MySQL
+- Maven
+- Docker
+
+---
+
+## Como Rodar o Projeto
 
 ### Pré-requisitos
 
-- Node.js (v14+)
-- Angular CLI (`npm install -g @angular/cli`)
+- Java JDK 17+
+- Maven
+- Banco de dados MySQL configurado (local ou container)
 
-### Passos
+### Passos para execução
 
 ```bash
-git clone https://github.com/6gusta/Angulardo.git
-cd Angulardo
-npm install
-ng serve --open
+git clone https://github.com/6gusta/ONG-pets-.git
+cd ONG-pets-
+# Ajustar application.properties para conexão com banco
+mvn spring-boot:run
