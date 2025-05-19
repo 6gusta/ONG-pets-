@@ -23,18 +23,23 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())
+                .csrf(csrf -> csrf.disable())  // CSRF desabilitado para todas as rotas
                 .authorizeHttpRequests(auth -> auth
-                        // 1) apenas /admin/login exige ROLE_ADMIN
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/api/login",
+                                "/auth/register",
+                                "/pets/**",
+                                "/ong/**",
+                                "/h2-console/**"   // Liberado para H2 Console
+                        ).permitAll()
                         .requestMatchers("/admin/login").hasAuthority("ROLE_ADMIN")
-                        // 2) todas as demais rotas ficam livres
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
-
-
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()));
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())); // Permitir frame para H2
 
         return http.build();
     }
@@ -42,7 +47,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:4200")); // seu frontend Angular
+        config.setAllowedOrigins(Arrays.asList("http://localhost:4200", "http://localhost:8080"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(true);

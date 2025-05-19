@@ -1,12 +1,12 @@
 package com.Crud._gusta.repository;
 
-import com.Crud._gusta.model.Model;
+import com.Crud._gusta.model.PetModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface CadastroRepository  extends JpaRepository<Model, Long> , JpaSpecificationExecutor<Model> {
+public interface CadastroRepository  extends JpaRepository<PetModel, Long> , JpaSpecificationExecutor<PetModel> {
 
 
-    Model findByNome(String nome);
+    PetModel findByNome(String nome);
 
 }

@@ -1,6 +1,7 @@
 package com.Crud._gusta.service;
 
-import com.Crud._gusta.model.Model;
+
+import com.Crud._gusta.model.PetModel;
 import com.Crud._gusta.repository.CadastroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,13 @@ public class UpdatePets {
     @Autowired
     CadastroRepository cadastro;
 
-public Model uppets(Long  idpet, Model novousaurio){
+public PetModel uppets(Long  idpet, PetModel novousaurio){
 
 
-    Optional <Model> opt = cadastro.findById(idpet);
+    Optional <PetModel> opt = cadastro.findById(idpet);
 
     if(opt.isPresent()){
-        Model model = opt.get();
+        PetModel model = opt.get();
         model.setNome(novousaurio.getNome());
         model.setIdade(novousaurio.getIdade());
         model.setSexo(novousaurio.getSexo());

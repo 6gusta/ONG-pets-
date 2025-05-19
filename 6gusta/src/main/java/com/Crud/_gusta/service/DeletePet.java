@@ -1,7 +1,8 @@
 package com.Crud._gusta.service;
 
 
-import com.Crud._gusta.model.Model;
+
+import com.Crud._gusta.model.PetModel;
 import com.Crud._gusta.repository.CadastroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class DeletePet {
     public  Boolean DelPet(Long idpet) {
 
         try {
-            Model model  = cadastroRepository.findById(idpet).orElse(null);
+            PetModel model  = cadastroRepository.findById(idpet).orElse(null);
             if(model != null) {
                 LOGGER.warning(" O pet não existe");
             }

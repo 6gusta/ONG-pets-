@@ -1,7 +1,8 @@
 package com.Crud._gusta.service;
 
 
-import com.Crud._gusta.model.Model;
+
+import com.Crud._gusta.model.PetModel;
 import com.Crud._gusta.repository.CadastroRepository;
 import com.Crud._gusta.repository.OngCadastroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,12 @@ public class CadastroPetService {
 
     private PasswordEncoder passwordEncoder;
 
-    public Model cadastropet(String nome , String idade, String sexo, String porte, String cidade, String Caracteristicas, String descricao, String fotoperfil , String estado) {
+    public PetModel cadastropet(String nome , String idade, String sexo, String porte, String cidade, String Caracteristicas, String descricao, String fotoperfil , String estado) {
 
         try {
 
 
-            Model cadastro = new Model();
+            PetModel cadastro = new PetModel();
             cadastro.setNome(nome);
             cadastro.setIdade(idade);
             cadastro.setSexo(sexo);

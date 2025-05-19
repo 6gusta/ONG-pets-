@@ -2,7 +2,8 @@ package com.Crud._gusta.service;
 
 
 import com.Crud._gusta.model.CadastroOng;
-import com.Crud._gusta.model.Model;
+
+import com.Crud._gusta.model.PetModel;
 import com.Crud._gusta.repository.CadastroRepository;
 import com.Crud._gusta.repository.OngCadastroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,10 @@ public class GetPetsService {
     @Autowired
     CadastroRepository cadastroRepository;
 
-    public Optional<Model> buscarpet(Long petId) {
+    public Optional<PetModel> buscarpet(Long petId) {
         return cadastroRepository.findById(petId);
     }
-    public List<Model> listarTodos() {
+    public List<PetModel> listarTodos() {
         return cadastroRepository.findAll();
     }
 

@@ -5,10 +5,15 @@ import com.Crud._gusta.exceptionsGenerics.CustomException;
 import com.Crud._gusta.model.CadastroOng;
 import com.Crud._gusta.model.InteressadosPet;
 import com.Crud._gusta.model.LoginDTO;
-import com.Crud._gusta.model.Model;
+
+import com.Crud._gusta.model.PetModel;
 import com.Crud._gusta.repository.OngCadastroRepository;
 import com.Crud._gusta.service.*;
 import com.Crud._gusta.util.JwtUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +24,7 @@ import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200",  allowCredentials = "true")
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/api")
 public class CadastroController {
 
@@ -49,10 +55,14 @@ public class CadastroController {
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
     }
-
+    @Operation(summary = "Atualiza os dados de um pet")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pet atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Erro ao atualizar o pet")
+    })
     @PutMapping("/user/{idpet}")
-    public ResponseEntity<?> atualizarpet(@PathVariable("idpet") Long idpet, @RequestBody Model pet){
-        Model model = updatePetsService.uppets(idpet, pet);
+    public ResponseEntity<?> atualizarpet(@PathVariable("idpet") Long idpet, @RequestBody PetModel pet){
+        PetModel model = updatePetsService.uppets(idpet, pet);
 
         if(model != null){
             return new ResponseEntity(model, HttpStatus.OK);
@@ -61,7 +71,11 @@ public class CadastroController {
         }
     }
 
-
+    @Operation(summary = "Exclui um pet pelo ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pet excluído com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Pet não encontrado")
+    })
     @DeleteMapping("/excluirpets/{idpet}")
     public ResponseEntity<?> excluirpets(@PathVariable("idpet") Long idpet) {
 
@@ -76,10 +90,10 @@ public class CadastroController {
         }
     }
 
-
+    @Operation(summary = "Filtra pets por porte, cidade, estado ou idade")
     @GetMapping("/filtra")
 
-    public ResponseEntity<List<Model>> foltrapets(
+    public ResponseEntity<List<PetModel>> foltrapets(
 
 
 
@@ -88,10 +102,10 @@ public class CadastroController {
             @RequestParam(required = false) String estado,
             @RequestParam(required = false) String idade
     ){
-        List<Model> resultado = filtroPetsService.filtrar(porte, cidade, estado, idade);
+        List<PetModel> resultado = filtroPetsService.filtrar(porte, cidade, estado, idade);
         return ResponseEntity.ok(resultado);
     }
-
+    @Operation(summary = "Realiza o login e retorna o token JWT")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO) {
         try {
@@ -106,12 +120,18 @@ public class CadastroController {
         }
     }
 
+    @Operation(summary = "Registra um novo pet no sistema")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pet cadastrado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Erro ao cadastrar o pet"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
 
-    @PostMapping("/register")
-    public ResponseEntity<String> registerPet(@RequestBody Model pet) {
+      @PostMapping("/register")
+    public ResponseEntity<String> registerPet(@RequestBody PetModel pet) {
         try {
             System.out.println(" recebendo dados do pet"+ pet.toString());
-            Model petSalvo = cadastroPetService.cadastropet(
+            PetModel petSalvo = cadastroPetService.cadastropet(
                     pet.getNome(),
                     pet.getIdade(),
                     pet.getSexo(),
@@ -135,7 +155,7 @@ public class CadastroController {
             return ResponseEntity.status(500).body("Erro no servidor: " + e.getMessage());
         }
     }
-
+    @Operation(summary = "Registra uma nova ONG")
     @PostMapping("/admin/registerong")
     public ResponseEntity<String> registerOng(@RequestBody CadastroOng cadastroOng) {
         try {
@@ -157,21 +177,25 @@ public class CadastroController {
         }
     }
 
-
+    @Operation(summary = "Busca um pet pelo ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pet encontrado"),
+            @ApiResponse(responseCode = "404", description = "Pet não encontrado")
+    })
     @GetMapping("/pets/{idpet}")
     public ResponseEntity<?> buscapet(@PathVariable("idpet") Long idpet) {
-        Optional<Model> pet = getPetsService.buscarpet(idpet);
+        Optional<PetModel> pet = getPetsService.buscarpet(idpet);
 
         return pet.map(ResponseEntity::ok)
                 .orElseThrow(() -> new CustomException("Pet não encontrado", "PET_NOT_FOUND"));
     }
-
+    @Operation(summary = "Lista todos os pets cadastrados")
     @GetMapping("/pet")
-    public ResponseEntity<List<Model>> listarPets() {
-        List<Model> pets = getPetsService.listarTodos();
+    public ResponseEntity<List<PetModel>> listarPets() {
+        List<PetModel> pets = getPetsService.listarTodos();
         return ResponseEntity.ok(pets);
     }
-
+    @Operation(summary = "Lista todos os interessados em adotar")
     @GetMapping("/ongs")
     public ResponseEntity<List<InteressadosPet>> interessadosPets() {
         List<InteressadosPet> ongs = getOngService.buscaONGs();
@@ -182,7 +206,7 @@ public class CadastroController {
     }
 
 
-
+    @Operation(summary = "Cadastra um novo interessado")
     @GetMapping("/ong/{idCadastrado}")
 
     public ResponseEntity<?> buscarOng(@PathVariable("idCadastrado") Long idCadastrado) {

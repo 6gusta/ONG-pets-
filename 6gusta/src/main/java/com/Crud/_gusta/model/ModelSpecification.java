@@ -4,7 +4,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class ModelSpecification {
 
-    public static Specification<Model> filter(String porte, String cidade, String estado, String idade) {
+    public static Specification<PetModel> filter(String porte, String cidade, String estado, String idade) {
         return (root, query, cb) -> {
             var predicates = cb.conjunction();
 

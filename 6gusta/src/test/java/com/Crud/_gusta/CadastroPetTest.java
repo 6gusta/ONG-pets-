@@ -1,7 +1,8 @@
 package com.Crud._gusta;
 
 import com.Crud._gusta.model.CadastroOng;
-import com.Crud._gusta.model.Model;
+
+import com.Crud._gusta.model.PetModel;
 import com.Crud._gusta.repository.CadastroRepository;
 import com.Crud._gusta.service.CadastroPetService;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +31,7 @@ public class CadastroPetTest {
 
     @Test
     public void deveCadastrarPetComSucesso(){
-        Model model = new Model();
+        PetModel model = new PetModel();
         model.setNome("Ralf");
         model.setIdade("23");
         model.setSexo("M");
@@ -40,9 +41,9 @@ public class CadastroPetTest {
         model.setDescricao("Ralf");
         model.setFotoperfil("nullo");
 
-        when(cadastroRepository.save(any(Model.class))).thenReturn(model);
+        when(cadastroRepository.save(any(PetModel.class))).thenReturn(model);
 
-        Model resultado = cadastroPetService.cadastropet(
+        PetModel resultado = cadastroPetService.cadastropet(
 
                 model.getNome(),
                 model.getIdade(),
@@ -58,7 +59,7 @@ public class CadastroPetTest {
 
         assertNotNull(resultado);
         assertEquals("Ralf", resultado.getNome());
-        verify(cadastroRepository, times(1)).save(any(Model.class));
+        verify(cadastroRepository, times(1)).save(any(PetModel.class));
 
     }
 }
