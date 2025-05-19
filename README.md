@@ -1,7 +1,7 @@
 
 ---
 
-# README Detalhado para **ONG-pets- (Backend Spring Boot)**
+ **ONG-pets- (Backend Spring Boot)**
 
 ```markdown
 # Sistema de Adoção de Pets - Backend Spring Boot
