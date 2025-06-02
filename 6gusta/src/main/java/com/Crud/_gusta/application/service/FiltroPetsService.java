@@ -1,9 +1,9 @@
-package com.Crud._gusta.service;
+package com.Crud._gusta.application.service;
 
 
-import com.Crud._gusta.model.ModelSpecification;
-import com.Crud._gusta.model.PetModel;
-import com.Crud._gusta.repository.CadastroRepository;
+import com.Crud._gusta.domain.model.ModelSpecification;
+import com.Crud._gusta.domain.model.PetModel;
+import com.Crud._gusta.infrastructure.repository.CadastroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

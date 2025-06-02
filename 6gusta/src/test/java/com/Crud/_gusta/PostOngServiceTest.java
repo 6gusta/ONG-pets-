@@ -1,8 +1,8 @@
 package com.Crud._gusta;
 
-import com.Crud._gusta.model.CadastroOng;
-import com.Crud._gusta.repository.OngCadastroRepository;
-import com.Crud._gusta.service.OngSendService;
+import com.Crud._gusta.domain.model.CadastroOng;
+import com.Crud._gusta.infrastructure.repository.OngCadastroRepository;
+import com.Crud._gusta.application.service.OngSendService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -1,4 +1,4 @@
-package com.Crud._gusta.model;
+package com.Crud._gusta.domain.model;
 
 import org.springframework.data.jpa.domain.Specification;
 

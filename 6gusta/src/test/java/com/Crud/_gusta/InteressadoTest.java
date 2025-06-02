@@ -1,8 +1,8 @@
 package com.Crud._gusta;
 
-import com.Crud._gusta.model.InteressadosPet;
-import com.Crud._gusta.repository.InteressadosOngRepository;
-import com.Crud._gusta.service.PostOng;
+import com.Crud._gusta.domain.model.InteressadosPet;
+import com.Crud._gusta.infrastructure.repository.InteressadosOngRepository;
+import com.Crud._gusta.application.service.PostOng;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

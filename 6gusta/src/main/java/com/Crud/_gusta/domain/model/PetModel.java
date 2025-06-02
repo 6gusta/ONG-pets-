@@ -1,4 +1,4 @@
-package com.Crud._gusta.model;
+package com.Crud._gusta.domain.model;
 
 
 import jakarta.persistence.*;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table( name = "PetModel")
+@Table( name = "PETMODEL")
 public class PetModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

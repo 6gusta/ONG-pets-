@@ -23,16 +23,27 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(csrf -> csrf.disable())  // CSRF desabilitado para todas as rotas
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/v3/api-docs/**",
+                                "/actuator/**",
+                                "/actuator/health",
+                                "/actuator/info",
                                 "/swagger-ui/**",
+                                "/h2-console/**" ,
+                                "/actuator/metrics",
                                 "/api/login",
-                                "/auth/register",
-                                "/pets/**",
-                                "/ong/**",
-                                "/h2-console/**"   // Liberado para H2 Console
+                                "/api/register",
+                                "/api/admin/registerong",
+                                "/api/pet",
+                                "/api/pets/**",
+                                "/api/filtra",
+                                "/api/ongs",
+                                "/api/ong/**",
+                                "/api/Cadastrointer",
+                                "/api/user/**",
+                                "/api/excluirpets/**"// Liberado para H2 Console
                         ).permitAll()
                         .requestMatchers("/admin/login").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()

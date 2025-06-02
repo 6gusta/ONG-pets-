@@ -1,10 +1,8 @@
 package com.Crud._gusta;
 
-import com.Crud._gusta.model.CadastroOng;
-
-import com.Crud._gusta.model.PetModel;
-import com.Crud._gusta.repository.CadastroRepository;
-import com.Crud._gusta.service.CadastroPetService;
+import com.Crud._gusta.domain.model.PetModel;
+import com.Crud._gusta.infrastructure.repository.CadastroRepository;
+import com.Crud._gusta.application.service.CadastroPetService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
