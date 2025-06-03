@@ -26,6 +26,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
+                                "/",
+                                "/index",
                                 "/v3/api-docs/**",
                                 "/actuator/**",
                                 "/actuator/health",
