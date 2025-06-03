@@ -1,5 +1,6 @@
 package com.Crud._gusta;
 
+import com.Crud._gusta.application.service.EmailService;
 import com.Crud._gusta.domain.model.InteressadosPet;
 import com.Crud._gusta.infrastructure.repository.InteressadosOngRepository;
 import com.Crud._gusta.application.service.PostOng;
@@ -17,6 +18,9 @@ public class InteressadoTest {
 
     @Mock
     InteressadosOngRepository interCadastroRepository;
+
+    @Mock
+    EmailService emailService;
 
     @InjectMocks
     PostOng postOng;
@@ -36,6 +40,7 @@ public class InteressadoTest {
         interessado.setEmail("ong.com@gusta.com.br");
 
         when(interCadastroRepository.save(any(InteressadosPet.class))).thenReturn(interessado);
+        doNothing().when(emailService).enviarEmail(anyString(), anyString(), anyString());
 
         // Act
         InteressadosPet resultado = postOng.PostOng(
@@ -49,5 +54,6 @@ public class InteressadoTest {
         assertNotNull(resultado);
         assertEquals("Ong", resultado.getNome());
         verify(interCadastroRepository, times(1)).save(any(InteressadosPet.class));
+        verify(emailService, times(1)).enviarEmail(anyString(), anyString(), anyString());
     }
 }
