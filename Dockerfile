@@ -1,7 +1,7 @@
 # Etapa 1: build da aplicação com Maven
 FROM maven:3.9.6-eclipse-temurin-21 AS build
 WORKDIR /app
-COPY . .
+COPY 6gusta .
 RUN mvn clean package -DskipTests
 
 # Etapa 2: imagem final com apenas o JAR
