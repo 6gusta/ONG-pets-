@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface OngCadastroRepository  extends JpaRepository<CadastroOng, Long> {
 
      CadastroOng findByNome(String nome);
+     boolean existsByEmail(String email);
+
 }
